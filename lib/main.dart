@@ -4,7 +4,8 @@ import 'package:golfep1/screens/Ep2Page.dart';
 // import 'package:golfep1/screens/MenuPage.dart';
 // import 'package:golfep1/screens/SearchPage.dart';
 import 'package:golfep1/screens/SignupPage.dart';
-// import 'package:golfep1/screens/StackPage.dart';
+import 'package:golfep1/screens/FlutterLayoutPage.dart';
+import 'package:golfep1/screens/DCreateDocPage.dart';
 
 void main() => runApp(MyApp());
 
@@ -108,7 +109,8 @@ class _MyHomePageState extends State<MyHomePage> {
             // RaisedButton(onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context) => SearchPage()),);}, child: Text('Search Page'),color: Colors.green,),  
             RaisedButton(onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context) => SignupPage()),);}, child: Text('Signup Page'),color: Colors.blue,),  
             RaisedButton(onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context) => Ep2Page()),);}, child: Text('EP2 Page'),color: Colors.blue,),  
-
+            RaisedButton(onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context) => FlutterLayoutPage()),);}, child: Text('Flutter Layout Tutorial Page'),color: Colors.blue,),  
+            RaisedButton(onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context) => DCreateDocPage()),);}, child: Text('D Create Doc Page'),), 
             //---------------
             //
             //---------------
