@@ -17,18 +17,25 @@ class _FlutterLayoutPageState extends State<FlutterLayoutPage> {
           ),
           body: ListView(
             children: <Widget>[
-              Image.asset('assets/images/bg01.jpg',
-                  width: 600, height: 240, fit: BoxFit.cover),
-              titleSection,
-              buttonSelection(myColor),
-              textSelection,
+              widgetBodyImage,
+              widgetBody,
+              widgetButtomBar(myColor),
+              widgetBodyText,
             ],
           ),
         ));
   }
 }
 
-Widget titleSection = Container(
+//======================================================
+// WIDGET:IMAGE BODY WIDGET
+//======================================================
+Widget widgetBodyImage = Image.asset('assets/images/bg01.jpg',width: 300, height: 300, fit: BoxFit.cover);
+
+//======================================================
+// WIDGET: TITLE SECTION
+//======================================================
+Widget widgetBody = Container(
   child: Padding(
     padding: const EdgeInsets.all(32),
     child: Row(
@@ -41,7 +48,7 @@ Widget titleSection = Container(
                 padding: const EdgeInsets.only(bottom: 8),
                 child: Container(
                   child: Text(
-                    "Oeschinen Lake Camground",
+                    "Oeschinen Lake Camground test",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                     ),
@@ -67,20 +74,26 @@ Widget titleSection = Container(
   ),
 );
 
-Widget buttonSelection(Color myColor) {
+//======================================================
+// WIDGET: BUILD BUTTOM BAR
+//======================================================
+Widget widgetButtomBar(Color myColor) {
   return Container(
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
-        _buildButtonColumn(Colors.black, Icons.call, 'CALL'),
-        _buildButtonColumn(Colors.black, Icons.near_me, 'ROUTE'),
-        _buildButtonColumn(Colors.black, Icons.share, 'SHARE'),
+        columnButtomButton(Colors.black, Icons.call, 'CALL'),
+        columnButtomButton(Colors.black, Icons.near_me, 'ROUTE'),
+        columnButtomButton(Colors.black, Icons.share, 'SHARE'),
       ],
     ),
   );
 }
 
-Column _buildButtonColumn(Color myColor, IconData myIconData, String myStr) {
+//======================================================
+// COLUMN: BUILD BUTTON + TEXT (COLUMN)
+//======================================================
+Column columnButtomButton(Color myColor, IconData myIconData, String myStr) {
   return Column(
     mainAxisSize: MainAxisSize.min,
     mainAxisAlignment: MainAxisAlignment.center,
@@ -100,7 +113,11 @@ Column _buildButtonColumn(Color myColor, IconData myIconData, String myStr) {
   );
 }
 
-Widget textSelection = Container(
+//======================================================
+// WIDGET BODY TEXT
+//======================================================
+
+Widget widgetBodyText = Container(
   padding: const EdgeInsets.all(32),
   child: Text(
     'Oeschinen Lake is a lake in the Bernese Oberland, Switzerland, 4 kilometres east of '

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:golfep1/services/LoggerService.dart';
+import 'package:golfep1/services/NewDoc.dart';
+import 'package:golfep1/services/ShowNotification.dart';
 
 class DCreateDocPage extends StatefulWidget {
   DCreateDocPage({Key key}) : super(key: key);
@@ -8,15 +11,31 @@ class DCreateDocPage extends StatefulWidget {
 }
 
 class _DCreateDocPageState extends State<DCreateDocPage> {
+  //===================================================================================
+  // 1) DECLARE VARIABLE
+  //===================================================================================
+  final _docIdController = TextEditingController()..text = "D2000001";    
+  final _usernameController = TextEditingController()..text = "traitet";  
+  final _docTitleController = TextEditingController()..text = "Petty Cash";
+  
   @override
   Widget build(BuildContext context) {
+    //========================================================
+    // SCAFFOLD
+    //========================================================
     return Scaffold(
+      //======================================================
+      // APP BAR
+      //======================================================
       appBar: AppBar(
         title: Text("Create Doc"),
         actions: <Widget>[
           IconButton(icon: Icon(Icons.camera_alt), onPressed: fnScan)
         ],
       ),
+      //======================================================
+      // BUTTOM NAVIGATE BAR
+      //======================================================
       bottomNavigationBar: BottomAppBar(
         shape: CircularNotchedRectangle(),
         child: Container(
@@ -25,31 +44,88 @@ class _DCreateDocPageState extends State<DCreateDocPage> {
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
-              buildBottomButtonColumn(Icons.home, "Config"),
-              buildBottomButtonColumn(Icons.search, "Recall"),
-              buildBottomButtonColumn(Icons.send, "Submit"),
+              //===============================================
+              // WIDGET:IMAGE BODY WIDGET
+              //===============================================             
+              columnButtomButtonBar(Icons.home, "Config"),
+              columnButtomButtonBar(Icons.search, "Recall"),
+              columnButtomButtonBar(Icons.send, "Submit"),
             ],
           ),
         ),
       ),
+      //======================================================
+      // BODY
+      //======================================================     
       body: ListView(
-        children: <Widget>[
-          BuildDocImage(),
-          buildBodyTextDetail,
+        children: <Widget>[   
+          //==========================================================================
+          // BUILD WIDGET IMAGE AND TEXT
+          //==========================================================================             
+          widgetBodyImage(),
+          widgetBodyText,
+           //==========================================================================
+          //INPUT DATA
+          //==========================================================================       
+          TextFormField(decoration: InputDecoration(labelText: 'Doc ID', prefixIcon: Icon(Icons.email)),controller: _docIdController),                
+          TextFormField(decoration: InputDecoration(labelText: 'User Name', prefixIcon: Icon(Icons.email)),controller: _usernameController),
+          TextFormField(decoration: InputDecoration(labelText: 'Doc Title', prefixIcon: Icon(Icons.security)),controller: _docTitleController),          
+           //==========================================================================
+          // 2) BUTTON
+          //==========================================================================    
+          RaisedButton(onPressed: (){}, child: Text('CONFIG')),            
+          RaisedButton(onPressed: ()
+          {
+            //========================================================================
+            // 3) PRINT LOG
+            //======================================================================== 
+            logger.i("E-mail" + _usernameController.text);
+            //========================================================================
+            // 4) VALIDATE
+            //========================================================================             
+            if (_usernameController.text == "" || _docTitleController.text == ""){
+              showMessageBox(context, "Error", "Please enter Doc Title", actions: [dismissButton(context)]);
+              logger.e("Username or password cannot be null");              
+            } // IF
+            //========================================================================
+            // 5) SIGNUP USER
+            //========================================================================             
+            else {
+              newDoc(context, {"username": _usernameController.text, "title": _docTitleController.text, "docId": _docIdController.text,},_docIdController.text);              
+            }  
+            //========================================================================
+            // 6) BUTTON NAME
+            //========================================================================                         
+          },child: Text('SAVE'),),               
+
         ],
       ),
     );
   }
 }
 
+
+
+//**************************************************************************************************************************/
+// FUNCTION
+//**************************************************************************************************************************/
+//======================================================
+// FUNCTION SCAN
+//======================================================
 void fnScan() {}
 
-Column buildBottomButtonColumn(IconData myIconData, String myLabel) {
+
+//**************************************************************************************************************************/
+// WIDGET
+//**************************************************************************************************************************/
+//======================================================
+// WIDGET: BUTTOM BUTTON BAR
+//======================================================
+Column columnButtomButtonBar(IconData myIconData, String myLabel) {
   return Column(
     children: <Widget>[
       IconButton(
         iconSize: 30.0,
-        //padding: EdgeInsets.only(left: 28.0),
         icon: Icon(myIconData),
         onPressed: () {},
       ),
@@ -60,22 +136,20 @@ Column buildBottomButtonColumn(IconData myIconData, String myLabel) {
   );
 }
 
-class BuildDocImage extends StatelessWidget {
-  const BuildDocImage({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
+//======================================================
+// WIDGET:IMAGE BODY WIDGET
+//======================================================
+Widget widgetBodyImage() =>
+ Padding(
       padding: const EdgeInsets.all(8.0),
       child: Image.asset('assets/images/bg01.jpg',
-          width: 600, height: 400, fit: BoxFit.cover),
+          width: 300, height: 200, fit: BoxFit.cover),
     );
-  }
-}
 
-Widget buildBodyTextDetail = Container(
+//======================================================
+// WIDGET: BODY TEXT
+//======================================================
+Widget widgetBodyText = Container(
   child: Padding(
     padding: const EdgeInsets.all(32),
     child: Row(
