@@ -27,13 +27,17 @@ class _RMenuNewState extends State<RMenuNew> {
   final _nameController = TextEditingController()..text = 'Fried rice';
   final _descriptionController = TextEditingController()..text = 'ข้าวผัด';
   final _imageUrlController = TextEditingController()..text = 'www.imagefoodmenu.com';    
+  final _priceController = TextEditingController()..text = '100';
+  final _spicyController = TextEditingController()..text = '2';  
+  final _ratingController = TextEditingController()..text = '4';    
+
   //========================================================
   // OVERRIDE (IMPLEMENT UI)
   //========================================================  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('CREATE MENU CATEGORY'),),
+      appBar: AppBar(title: Text('Register New Menu'),),
       body: ListView(
         children: <Widget>[
           //================================================
@@ -43,6 +47,9 @@ class _RMenuNewState extends State<RMenuNew> {
           TextFormField(decoration: InputDecoration(labelText: 'Menu Name', prefixIcon: Icon(Icons.insert_chart)),controller: _nameController,),
           TextFormField(decoration: InputDecoration(labelText: 'Menu Description', prefixIcon: Icon(Icons.insert_chart)),controller: _descriptionController,),
           TextFormField(decoration: InputDecoration(labelText: 'Menu Image URL', prefixIcon: Icon(Icons.insert_chart)),controller:_imageUrlController,), 
+          TextFormField(decoration: InputDecoration(labelText: 'Price', prefixIcon: Icon(Icons.insert_chart)),controller:_priceController,), 
+          TextFormField(decoration: InputDecoration(labelText: 'Spicy', prefixIcon: Icon(Icons.insert_chart)),controller:_spicyController,), 
+          TextFormField(decoration: InputDecoration(labelText: 'Rating', prefixIcon: Icon(Icons.insert_chart)),controller:_ratingController,),                               
           //================================================
           // UI: SAVE BUTTON
           //================================================                      
@@ -63,7 +70,10 @@ class _RMenuNewState extends State<RMenuNew> {
       id: _idController.text,
       name: _nameController.text, 
       description: _descriptionController.text, 
-      imageUrl: _imageUrlController.text
+      imageUrl: _imageUrlController.text,
+      // price: double.parse(_priceController.text),
+      // spicy: int.parse(_spicyController.text),
+      // rating: int.parse(_ratingController.text)
     );
   //========================================================
   // SHOW LOG
@@ -82,6 +92,9 @@ class _RMenuNewState extends State<RMenuNew> {
     });
     
   }
+
+
+
 
 
 }

@@ -3,29 +3,32 @@
   //========================================================  
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:golfep1/models/RMenuCatModel.dart';
+import 'package:golfep1/models/ROrderModel.dart';
 import 'package:golfep1/services/LoggerService.dart';
 import 'package:golfep1/services/ShowNotification.dart';
 
 //==========================================================
 // MAIN CLASS
 //==========================================================  
-class RMenuCatNew extends StatefulWidget {
+class ROrderNew extends StatefulWidget {
   @override
-  _RMenuCatNewState createState() => _RMenuCatNewState();
+  _ROrderNewState createState() => _ROrderNewState();
 }
 
 //==========================================================
 // STATE CLASS
 //==========================================================  
-class _RMenuCatNewState extends State<RMenuCatNew> {
+class _ROrderNewState extends State<ROrderNew> {
   //========================================================
   // DECALRE VARIABLE
   //========================================================  
-  final _idController = TextEditingController()..text = 'C0001';
-  final _nameController = TextEditingController()..text = 'Drinks';
-  final _descriptionController = TextEditingController()..text = 'Drinks and others';
-  final _imageUrlController = TextEditingController()..text = 'www.image.com';   
+  final _idController = TextEditingController()..text = 'O0001';
+  final _nameController = TextEditingController()..text = 'New Order';
+  final _descriptionController = TextEditingController()..text = 'New Order (VIP)';
+  final _tableController = TextEditingController()..text = 'T0001'; 
+  final _customerController = TextEditingController()..text = 'Mr.Traitet'; 
+  final _menuIdController = TextEditingController()..text = 'M0001';       
+  //final _qtyUrlController = TextEditingController()..text = 'www.image.com';   
 
   //========================================================
   // OVERRIDE (IMPLEMENT UI)
@@ -33,16 +36,18 @@ class _RMenuCatNewState extends State<RMenuCatNew> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Register New Menu Category'),),
+      appBar: AppBar(title: Text('Restaurant Order'),),
       body: ListView(
         children: <Widget>[
           //================================================
           // UI: TEXT
           //================================================  
-          TextFormField(decoration: InputDecoration(labelText: 'Menu ID', prefixIcon: Icon(Icons.insert_chart)),controller: _idController,),
-          TextFormField(decoration: InputDecoration(labelText: 'Menu Name', prefixIcon: Icon(Icons.insert_chart)),controller: _nameController,),
-          TextFormField(decoration: InputDecoration(labelText: 'Menu Description', prefixIcon: Icon(Icons.insert_chart)),controller: _descriptionController,),
-          TextFormField(decoration: InputDecoration(labelText: 'Menu Image URL', prefixIcon: Icon(Icons.insert_chart)),controller:_imageUrlController,), 
+          TextFormField(decoration: InputDecoration(labelText: 'Order ID', prefixIcon: Icon(Icons.insert_chart)),controller: _idController,),
+          TextFormField(decoration: InputDecoration(labelText: 'Name', prefixIcon: Icon(Icons.insert_chart)),controller: _nameController,),
+          TextFormField(decoration: InputDecoration(labelText: 'Description', prefixIcon: Icon(Icons.insert_chart)),controller: _descriptionController,),
+          TextFormField(decoration: InputDecoration(labelText: 'Menu ID', prefixIcon: Icon(Icons.insert_chart)),controller:_tableController,), 
+          TextFormField(decoration: InputDecoration(labelText: 'Customer', prefixIcon: Icon(Icons.insert_chart)),controller:_customerController,), 
+          TextFormField(decoration: InputDecoration(labelText: 'table', prefixIcon: Icon(Icons.insert_chart)),controller:_menuIdController,),                     
           //================================================
           // UI: SAVE BUTTON
           //================================================                      
@@ -59,11 +64,14 @@ class _RMenuCatNewState extends State<RMenuCatNew> {
   //========================================================
   // PREPARE DATA
   //========================================================       
-    RMenuCatModel myModel = RMenuCatModel(
+    ROrderModel myModel = ROrderModel(
       id: _idController.text,
       name: _nameController.text, 
       description: _descriptionController.text, 
-      imageUrl: _imageUrlController.text
+      menuId: _menuIdController.text,
+      customer: _customerController.text,
+      qty: 1,
+      table: _tableController.text,                  
     );
   //========================================================
   // SHOW LOG
@@ -72,7 +80,7 @@ class _RMenuCatNewState extends State<RMenuCatNew> {
    //=======================================================
   // SAVE DB TO FIRESTORE
   //========================================================     
-    Firestore.instance.collection("TM_REST_MENU_CAT").document(_idController.text).setData(myModel.toFileStone())        // SAVE DB
+    Firestore.instance.collection("TT_REST_ORDER").document(_idController.text).setData(myModel.toFileStone())        // SAVE DB
     .then((returnDocuments){        // IF COMPLETE
       logger.i('Insert Complete');  // PRINT LOG
       showMessageBox(context, "Success", _idController.text + " saved completely", actions: [dismissButton(context)]);   //POP UP COMPLETE
